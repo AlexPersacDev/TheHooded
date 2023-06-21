@@ -38,8 +38,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(feets.position, radFeets);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawSphere(feets.position, radFeets);
+    //}
 }
