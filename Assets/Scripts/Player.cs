@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))//si pulso espacio
         {
             rbPlayer.AddForce(Vector3.up * force, ForceMode2D.Impulse);//aplico una ferza hacia arriba
+            anim.SetBool("Running", false); //el salto tiene prioridas sobre correr
             anim.SetTrigger("Jump");//Activaré animación de saltar
         }
     }
