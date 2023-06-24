@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     Rigidbody2D rbPlayer;
     Animator anim;
-    [SerializeField] float speed, force;
     float h, v;
     Vector3 spawn;
 
-    [Header("CheckSphereGround")]
+    [Header("Properties")]
+    [SerializeField] float speed, force;
+    int playerDamage;
+    int playerHP;
+
+    float radOverlap = 0.2f;
+    [Header("OverlapGround")]
     [SerializeField] Transform feets;
     [SerializeField] LayerMask ground;
-    float radFeets = 0.2f;
+
+    [Header("OverlapAttack")]
+    [SerializeField] Transform hand;
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
@@ -27,18 +34,27 @@ public class Player : MonoBehaviour
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
         OnGround();//Detecto si estoy en el suelo
+        Attack();
     }
 
     private void FixedUpdate()
     {
         Movement();//llamo al metodo que detecta el movimiento
-        
     }
 
+
+
+    private void OnTriggerEnter2D(Collider2D trigger)
+    {
+        if (trigger.CompareTag("Void"))//si entro en contacto con "Void"
+        {
+            transform.position = spawn; //vuelvo al punto inicial
+        }
+    }
     void OnGround()
     {
         //bool onGround = Physics.CheckSphere(feets.position, radFeets, ground);
-        if (Physics2D.OverlapCircle(feets.position, radFeets, ground)) // si estoy tocando el suelo
+        if (Physics2D.OverlapCircle(feets.position, radOverlap, ground)) // si estoy tocando el suelo
         {
             Jumping();
             anim.SetBool("Falling", false);//dejaré de caer
@@ -47,16 +63,12 @@ public class Player : MonoBehaviour
             Falling(); //llamo al metodo que detecta si estoy cayendo
     }
 
-    private void OnDrawGizmos()
+    void OverlapAttack()
     {
-        Gizmos.DrawSphere(feets.position, radFeets);
-    }
-
-    private void OnTriggerEnter2D(Collider2D trigger)
-    {
-        if (trigger.CompareTag("Void"))//si entro en contacto con "Void"
+        Collider2D enemyColl = Physics2D.OverlapCircle(hand.position, radOverlap);
+        if (enemyColl && enemyColl.gameObject.TryGetComponent<IDamagable>(out IDamagable Danyable))
         {
-            transform.position = spawn; //vuelvo al punto inicial
+            Danyable.Damaged(playerDamage);
         }
     }
 
@@ -93,5 +105,23 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("Falling", true); //estaré cayendo
         }
+    }
+
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            anim.SetTrigger("Attack");
+        }
+    }
+
+    void IDamagable.Damaged(int damage)
+    {
+        playerHP -= damage;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(feets.position, radOverlap);
     }
 }
