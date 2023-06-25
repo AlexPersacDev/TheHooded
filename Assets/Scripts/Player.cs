@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IDamagable
+public class Player : MonoBehaviour, IDamageable
 {
     Rigidbody2D rbPlayer;
     Animator anim;
@@ -11,7 +11,7 @@ public class Player : MonoBehaviour, IDamagable
 
     [Header("Properties")]
     [SerializeField] float speed, force;
-    int playerDamage;
+    int playerDamage = 23;
     int playerHP;
 
     float radOverlap = 0.2f;
@@ -33,13 +33,13 @@ public class Player : MonoBehaviour, IDamagable
     {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
-        OnGround();//Detecto si estoy en el suelo
-        Attack();
+        PlayerOnGround();//Detecto si estoy en el suelo
+        PlayerAttack();
     }
 
     private void FixedUpdate()
     {
-        Movement();//llamo al metodo que detecta el movimiento
+        PlayerMovement();//llamo al metodo que detecta el movimiento
     }
 
 
@@ -51,28 +51,28 @@ public class Player : MonoBehaviour, IDamagable
             transform.position = spawn; //vuelvo al punto inicial
         }
     }
-    void OnGround()
+    void PlayerOnGround()
     {
         //bool onGround = Physics.CheckSphere(feets.position, radFeets, ground);
         if (Physics2D.OverlapCircle(feets.position, radOverlap, ground)) // si estoy tocando el suelo
         {
-            Jumping();
+            PlayerJumping();
             anim.SetBool("Falling", false);//dejaré de caer
         }
         else// si estoy en el aire
-            Falling(); //llamo al metodo que detecta si estoy cayendo
+            PlayerFalling(); //llamo al metodo que detecta si estoy cayendo
     }
 
-    void OverlapAttack()
+    void PlayerOverlapAttack()
     {
         Collider2D enemyColl = Physics2D.OverlapCircle(hand.position, radOverlap);
-        if (enemyColl && enemyColl.gameObject.TryGetComponent<IDamagable>(out IDamagable Danyable))
+        if (enemyColl && enemyColl.gameObject.TryGetComponent<IDamageable>(out IDamageable enemyDamageable))
         {
-            Danyable.Damaged(playerDamage);
+            enemyDamageable.Damaged(playerDamage);
         }
     }
 
-    void Movement() //método de movimiento
+    void PlayerMovement() //método de movimiento
     {
         rbPlayer.AddForce(new Vector3(h, 0, 0) * speed, ForceMode2D.Force); //aplico una fuerza en dirección h(-1 o 1)
         if (h != 0)//si h no es igual a cero
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour, IDamagable
         transform.localScale = new Vector3(h, transform.localScale.y, transform.localScale.z);//mi escala en x será igual al valor de h
     }
 
-    void Jumping()//método de salto
+    void PlayerJumping()//método de salto
     {
         if (Input.GetKeyDown(KeyCode.Space))//si pulso espacio
         {
@@ -99,7 +99,7 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    void Falling()//método de caida
+    void PlayerFalling()//método de caida
     {
         if (rbPlayer.velocity.y <= 0)//si mi velocidad en y es menor a 0
         {
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    void Attack()
+    void PlayerAttack()
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -115,13 +115,14 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    void IDamagable.Damaged(int damage)
+    void IDamageable.Damaged(int damage)
     {
         playerHP -= damage;
+        Debug.Log("auch");
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(feets.position, radOverlap);
+        Gizmos.DrawSphere(hand.position, radOverlap);
     }
 }

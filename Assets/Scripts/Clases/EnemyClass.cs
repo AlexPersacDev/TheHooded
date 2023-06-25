@@ -8,24 +8,15 @@ public class EnemyClass : ScriptableObject
     public float speed;
     public int enemyDamage;
     public int enemyHP;
-
-    
-    public void Attack()
+    public Animator anim;
+    //CLase para todos los enemigos
+    public void Attack()//3 de 4 enemigos atacarán
     {
         
     }
 
-    public void PlayerDetection()
+    public void PlayerDetection()//3 de 4 enemigos deberán detectar al jugador
     {
 
     }
-
-
-
-    //IEnumerator Walk()
-    //{
-
-    //}
-
-
 }
