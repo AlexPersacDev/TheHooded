@@ -30,12 +30,14 @@ public class PoorEnemy : MonoBehaviour, IDamageable
 
     void Update()
     {
-        Flip();
+        PoorEnemyFlip();
     }
 
     void IDamageable.Damaged(int damage)//metodo con el que recibe daño
     {
+        poorEnemy.enemyHP--;
         anim.SetTrigger("Damaged");
+        poorEnemy.Died(anim);
     }
 
     private void OnTriggerEnter2D(Collider2D trigger)
@@ -66,7 +68,7 @@ public class PoorEnemy : MonoBehaviour, IDamageable
         }
     }
 
-    void Flip()
+    void PoorEnemyFlip()
     {
         if (transform.position.x > newPos.x)
         {
@@ -74,5 +76,10 @@ public class PoorEnemy : MonoBehaviour, IDamageable
         }
         else
             transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+    void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

@@ -18,4 +18,12 @@ public class EnemyClass : ScriptableObject
     {
 
     }
+
+    public void Died(Animator enemyAnim)
+    {
+        if (enemyHP < 0)
+        {
+            enemyAnim.SetTrigger("Dead");
+        }
+    }
 }
