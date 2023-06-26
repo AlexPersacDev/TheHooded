@@ -9,6 +9,7 @@ public class PoorEnemy : MonoBehaviour, IDamageable
     int damage = 1;
     int hP;
     float speed = 5;
+    Animator anim;
 
     Vector3 startPos;
     Vector3 newPos;
@@ -21,7 +22,7 @@ public class PoorEnemy : MonoBehaviour, IDamageable
         poorEnemy.enemyDamage = damage;
         poorEnemy.enemyHP = hP;
         startPos = transform.position;
-        poorEnemy.anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
 
         StartCoroutine(PoorEnemyMovement());
     }
@@ -34,7 +35,7 @@ public class PoorEnemy : MonoBehaviour, IDamageable
 
     void IDamageable.Damaged(int damage)//metodo con el que recibe daño
     {
-        Debug.Log(damage);
+        anim.SetTrigger("Damaged");
     }
 
     private void OnTriggerEnter2D(Collider2D trigger)
@@ -56,11 +57,11 @@ public class PoorEnemy : MonoBehaviour, IDamageable
             
             while (transform.position != destiny)//mientras su posición sea diferente al destino se mueve
             {
-                poorEnemy.anim.SetBool("Walking", true);
+                anim.SetBool("Walking", true);
                 transform.position = Vector3.MoveTowards(transform.position, destiny, poorEnemy.speed * Time.deltaTime);
                 yield return null; //vuelve al siguiente frame
             }
-            poorEnemy.anim.SetBool("Walking", false);
+            anim.SetBool("Walking", false);
             yield return new WaitForSeconds(2f);
         }
     }

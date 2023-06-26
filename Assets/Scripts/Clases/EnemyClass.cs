@@ -8,8 +8,7 @@ public class EnemyClass : ScriptableObject
     public float speed;
     public int enemyDamage;
     public int enemyHP;
-    public Animator anim;
-    //CLase para todos los enemigos
+    //Clase para todos los enemigos
     public void Attack()//3 de 4 enemigos atacarán
     {
         

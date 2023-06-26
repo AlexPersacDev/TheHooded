@@ -11,7 +11,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Properties")]
     [SerializeField] float speed, force;
-    int playerDamage = 23;
+    int playerDamage = 1;
     int playerHP;
 
     float radOverlap = 0.2f;
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("OverlapAttack")]
     [SerializeField] Transform hand;
+    [SerializeField] LayerMask enemy;
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
@@ -65,7 +66,7 @@ public class Player : MonoBehaviour, IDamageable
 
     void PlayerOverlapAttack()
     {
-        Collider2D enemyColl = Physics2D.OverlapCircle(hand.position, radOverlap);
+        Collider2D enemyColl = Physics2D.OverlapCircle(hand.position, radOverlap, enemy);
         if (enemyColl && enemyColl.gameObject.TryGetComponent<IDamageable>(out IDamageable enemyDamageable))
         {
             enemyDamageable.Damaged(playerDamage);
@@ -117,8 +118,10 @@ public class Player : MonoBehaviour, IDamageable
 
     void IDamageable.Damaged(int damage)
     {
+        rbPlayer.velocity = Vector2.zero;
+        rbPlayer.AddForce(new Vector3(-transform.localScale.x, 0, 0) * 15, ForceMode2D.Impulse);
+        anim.SetTrigger("Damaged");
         playerHP -= damage;
-        Debug.Log("auch");
     }
 
     private void OnDrawGizmos()
