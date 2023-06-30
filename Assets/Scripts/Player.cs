@@ -22,6 +22,9 @@ public class Player : MonoBehaviour, IDamageable
     [Header("OverlapAttack")]
     [SerializeField] Transform hand;
     [SerializeField] LayerMask enemy;
+
+    public delegate void Colecction();
+    public static event Colecction collected;
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
@@ -50,6 +53,11 @@ public class Player : MonoBehaviour, IDamageable
         if (trigger.CompareTag("Void"))//si entro en contacto con "Void"
         {
             transform.position = spawn; //vuelvo al punto inicial
+        }
+        if (trigger.TryGetComponent<ICollectable>(out ICollectable collectable))//si el objeto con el que se colisiona tiene dicha interfaz
+        {
+            collectable.Collected();//se llama al método
+            collected?.Invoke();//se activará el evento de recollección
         }
     }
     void PlayerOnGround()
