@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SoulFragment : MonoBehaviour, ICollectable
 {
-    // Start is called before the first frame update
+    public delegate void Colecction();
+    public static event Colecction collected;
+
     void Start()
     {
         
@@ -18,6 +20,7 @@ public class SoulFragment : MonoBehaviour, ICollectable
 
     void ICollectable.Collected()
     {
-        Debug.Log("Recolectado!");
+        collected?.Invoke();//se activará el evento de recollección
+        Destroy(gameObject);
     }
 }

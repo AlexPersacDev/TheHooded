@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    int playerLifes;
+    int playerSouls;
+    int soulFragments;
     void Start()
     {
 
@@ -13,21 +15,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(soulFragments);
     }
 
     private void OnEnable()
     {
-        Player.collected += Collectionable;
+        SoulFragment.collected += Collectionable;
     }
 
     private void OnDisable()
     {
-        Player.collected -= Collectionable;
+        SoulFragment.collected -= Collectionable;
     }
 
     void Collectionable()
     {
-        Debug.Log("EE");
+        soulFragments++;
     }
 }
