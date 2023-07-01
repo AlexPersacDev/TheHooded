@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   enemyDamage: 1
-  enemyHP: 0
+  enemyHP: -1
+  soulFragments:
+  - {fileID: 1383505224037206081, guid: 80b77e56e402f2c46b2c298e9fb8de60, type: 3}
+  - {fileID: 1260155652924387058, guid: caf11d46e79f29348ab7ed05bbb68562, type: 3}
+  - {fileID: 9028459440569143957, guid: 2e21c0bbd5f2560418c526b5f6a0a54e, type: 3}
+  - {fileID: 3576908628307936072, guid: a35680e9691c2394bbb5923a89eeaea2, type: 3}

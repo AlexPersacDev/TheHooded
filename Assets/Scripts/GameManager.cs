@@ -15,21 +15,34 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(soulFragments);
+
     }
 
     private void OnEnable()
     {
+        Player.looseLife += PlayerLifes;
         SoulFragment.collected += Collectionable;
     }
 
     private void OnDisable()
     {
+        Player.looseLife += PlayerLifes;
         SoulFragment.collected -= Collectionable;
+    }
+
+    void PlayerLifes()
+    {
+        playerLifes--;
     }
 
     void Collectionable()
     {
         soulFragments++;
+    }
+
+    void PlayerSouls()
+    {
+        playerLifes = 5;
+        playerSouls--;
     }
 }

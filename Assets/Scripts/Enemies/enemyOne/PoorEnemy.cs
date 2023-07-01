@@ -78,6 +78,11 @@ public class PoorEnemy : MonoBehaviour, IDamageable
             transform.localScale = new Vector3(-1, 1, 1);
     }
 
+    void Droping()
+    {
+        poorEnemy.Drop(gameObject, 1, 4);
+    }
+
     void Destroy()
     {
         Destroy(gameObject);

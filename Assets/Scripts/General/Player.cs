@@ -12,7 +12,8 @@ public class Player : MonoBehaviour, IDamageable
     [Header("Properties")]
     [SerializeField] float speed, force;
     int playerDamage = 1;
-    int playerHP;
+    int playerHP = 5;
+    int playerSouls = 3;
 
     float radOverlap = 0.2f;
     [Header("OverlapGround")]
@@ -23,6 +24,10 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] Transform hand;
     [SerializeField] LayerMask enemy;
 
+    public delegate void LooseLife();
+    public static event LooseLife looseLife;
+    public delegate void Died();
+    public static event Died die;
 
     void Start()
     {
@@ -47,7 +52,7 @@ public class Player : MonoBehaviour, IDamageable
 
 
 
-    private void OnTriggerEnter2D(Collider2D trigger)
+    private void OnTriggerStay2D(Collider2D trigger)
     {
         if (trigger.CompareTag("Void"))//si entro en contacto con "Void"
         {
@@ -126,8 +131,26 @@ public class Player : MonoBehaviour, IDamageable
     {
         rbPlayer.velocity = Vector2.zero;
         rbPlayer.AddForce(new Vector3(-transform.localScale.x, 0, 0) * 15, ForceMode2D.Impulse);
-        anim.SetTrigger("Damaged");
-        playerHP -= damage;
+        looseLife?.Invoke();
+        if (playerHP > 1)
+        {
+            playerHP -= damage;
+            anim.SetTrigger("Damaged");
+        }
+        else
+        {
+            Dying();
+        }
+
+    }
+
+    void Dying()
+    {
+        transform.position = spawn;
+        //anim.SetTrigger("Died");
+        die?.Invoke();
+        playerSouls--;
+        playerHP = 5;
     }
 
     private void OnDrawGizmos()
