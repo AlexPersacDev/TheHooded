@@ -33,7 +33,7 @@ public class PoorEnemy : MonoBehaviour, IDamageable
         PoorEnemyFlip();
     }
 
-    void IDamageable.Damaged(int damage)//metodo con el que recibe daño
+    void IDamageable.Damaged()//metodo con el que recibe daño
     {
         poorEnemy.enemyHP--;
         anim.SetTrigger("Damaged");
@@ -45,7 +45,7 @@ public class PoorEnemy : MonoBehaviour, IDamageable
         //si se entra en contacto con un objeto dañable y con la layermask de Player
         if (trigger.gameObject.TryGetComponent<IDamageable>(out IDamageable player) && trigger.gameObject.layer == 6)
         {
-            player.Damaged(damage);//se llamara al metodo Damaged de dicho objeto
+            player.Damaged();//se llamara al metodo Damaged de dicho objeto
         }
     }
 

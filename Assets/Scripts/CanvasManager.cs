@@ -5,12 +5,16 @@ using TMPro;
 
 public class CanvasManager : MonoBehaviour
 {
+    [Header("Player UI")]
     [SerializeField] TextMeshProUGUI soulFrag;
     int soulFragCount;
     [SerializeField] GameObject[] playerLifes;
     int playerLifesCount = 5;
     [SerializeField] TextMeshProUGUI playerSouls;
     int playerSoulsCount = 3;
+
+    [Header("Game Over")]
+    [SerializeField] GameObject gameOverWindow;
     void Start()
     {
         
@@ -24,16 +28,18 @@ public class CanvasManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.die += SoulsUpdate;
-        Player.looseLife += LifesUpdate;
         SoulFragment.collected += SoulFragmentsUpdate;
+        Player.looseLife += LifesUpdate;
+        Player.gameOver -= GameOver;
+        Player.die += SoulsUpdate;
     }
 
     private void OnDisable()
     {
-        Player.die -= SoulsUpdate;
-        Player.looseLife += LifesUpdate;
         SoulFragment.collected -= SoulFragmentsUpdate;
+        Player.looseLife += LifesUpdate;
+        Player.die -= SoulsUpdate;
+        Player.gameOver -= GameOver;
     }
 
     void SoulFragmentsUpdate()
@@ -59,6 +65,11 @@ public class CanvasManager : MonoBehaviour
             Animator animLifes = playerLifes[i].GetComponent<Animator>();
             animLifes.SetTrigger("Activate");
         }
+    }
+
+    void GameOver()
+    {
+
     }
 
 }

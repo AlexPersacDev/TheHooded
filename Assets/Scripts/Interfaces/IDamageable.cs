@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void Damaged(int damage); //Interfaz para objetos dañables
+    void Damaged(); //Interfaz para objetos dañables
 }

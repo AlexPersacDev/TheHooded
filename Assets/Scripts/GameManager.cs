@@ -20,14 +20,14 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.looseLife += PlayerLifes;
         SoulFragment.collected += Collectionable;
+        Player.looseLife += PlayerLifes;
     }
 
     private void OnDisable()
     {
-        Player.looseLife += PlayerLifes;
         SoulFragment.collected -= Collectionable;
+        Player.looseLife += PlayerLifes;
     }
 
     void PlayerLifes()
