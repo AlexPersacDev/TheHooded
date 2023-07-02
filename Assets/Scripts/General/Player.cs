@@ -169,6 +169,7 @@ public class Player : MonoBehaviour, IDamageable
         if (playerSouls == 0)
         {
             gameOver?.Invoke();
+            gameObject.SetActive(false);
         }
     }
 

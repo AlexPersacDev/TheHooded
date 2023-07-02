@@ -14,7 +14,7 @@ public class CanvasManager : MonoBehaviour
     int playerSoulsCount = 3;
 
     [Header("Game Over")]
-    [SerializeField] GameObject gameOverWindow;
+    [SerializeField] GameObject BlackPanel;
     void Start()
     {
         
@@ -30,7 +30,7 @@ public class CanvasManager : MonoBehaviour
     {
         SoulFragment.collected += SoulFragmentsUpdate;
         Player.looseLife += LifesUpdate;
-        Player.gameOver -= GameOver;
+        Player.gameOver += GameOver;
         Player.die += SoulsUpdate;
     }
 
@@ -69,7 +69,6 @@ public class CanvasManager : MonoBehaviour
 
     void GameOver()
     {
-
+        BlackPanel.SetActive(true);
     }
-
 }
