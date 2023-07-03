@@ -15,6 +15,13 @@ public class CanvasManager : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] GameObject BlackPanel;
+
+    [Header("Pause Menu")]
+    [SerializeField] GameObject pauseMenu;
+    
+    [Header("Options Menu")]
+    [SerializeField] GameObject optionsMenu;
+    bool pauseMenuOpened;
     void Start()
     {
         
@@ -23,7 +30,10 @@ public class CanvasManager : MonoBehaviour
     
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenu();
+        }
     }
 
     private void OnEnable()
@@ -32,6 +42,9 @@ public class CanvasManager : MonoBehaviour
         Player.looseLife += LifesUpdate;
         Player.gameOver += GameOver;
         Player.die += SoulsUpdate;
+        Buttons.resume += PauseMenu;
+        Buttons.options += OptionsMenu;
+        Buttons.back += Back;
     }
 
     private void OnDisable()
@@ -40,6 +53,9 @@ public class CanvasManager : MonoBehaviour
         Player.looseLife += LifesUpdate;
         Player.die -= SoulsUpdate;
         Player.gameOver -= GameOver;
+        Buttons.resume -= PauseMenu;
+        Buttons.options -= OptionsMenu;
+        Buttons.back -= Back;
     }
 
     void SoulFragmentsUpdate()
@@ -67,6 +83,31 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+    void PauseMenu()
+    {
+            if (!pauseMenuOpened)
+            {
+                pauseMenu.SetActive(true);
+                pauseMenuOpened = true;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                pauseMenu.SetActive(false);
+                pauseMenuOpened = false;
+                Time.timeScale = 1;
+            }
+    }
+
+    void OptionsMenu()
+    {
+        optionsMenu.SetActive(true);
+    }
+
+    void Back()
+    {
+        optionsMenu.SetActive(false); 
+    }
     void GameOver()
     {
         BlackPanel.SetActive(true);

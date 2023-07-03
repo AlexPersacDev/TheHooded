@@ -4,9 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gM;
+
+
+
     int playerLifes;
     int playerSouls;
     int soulFragments;
+
+    private void Awake()
+    {
+
+        if (gM == null) // si no existe gm
+        {
+            gM = this; //gm soy yo
+            DontDestroyOnLoad(gameObject); // no me desturllo
+        }
+        else
+            Destroy(gameObject);
+    }
+
     void Start()
     {
 
@@ -15,7 +32,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void OnEnable()
