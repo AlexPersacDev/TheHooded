@@ -9,9 +9,9 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI soulFrag;
     int soulFragCount;
     [SerializeField] GameObject[] playerLifes;
-    int playerLifesCount = 5;
+    int playerLifesCount;
     [SerializeField] TextMeshProUGUI playerSouls;
-    int playerSoulsCount = 3;
+    int playerSoulsCount;
 
     [Header("Game Over")]
     [SerializeField] GameObject BlackPanel;
@@ -24,10 +24,14 @@ public class CanvasManager : MonoBehaviour
     bool pauseMenuOpened;
     void Start()
     {
-        
+        playerLifesCount = GameManager.gM.PlayerLifes();
+        playerSoulsCount = GameManager.gM.PlayerSouls();
+        soulFragCount = GameManager.gM.SoukFragments();
+        EnableLifes();
+        playerSouls.text = "x" + playerSoulsCount.ToString();
+        soulFrag.text = "x" + soulFragCount.ToString();
     }
 
-    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -45,6 +49,7 @@ public class CanvasManager : MonoBehaviour
         Buttons.resume += PauseMenu;
         Buttons.options += OptionsMenu;
         Buttons.back += Back;
+        Altar.tarodCards += TarotCards;
     }
 
     private void OnDisable()
@@ -56,8 +61,16 @@ public class CanvasManager : MonoBehaviour
         Buttons.resume -= PauseMenu;
         Buttons.options -= OptionsMenu;
         Buttons.back -= Back;
+        Altar.tarodCards -= TarotCards;
     }
 
+    void EnableLifes()
+    {
+        for (int i = 0; i < playerLifesCount; i++)
+        {
+            playerLifes[i].SetActive(true);
+        }
+    }
     void SoulFragmentsUpdate()
     {
         soulFragCount++;
@@ -111,5 +124,11 @@ public class CanvasManager : MonoBehaviour
     void GameOver()
     {
         BlackPanel.SetActive(true);
+    }
+
+
+    void TarotCards()
+    {
+        Debug.Log("cartas de tarot");
     }
 }

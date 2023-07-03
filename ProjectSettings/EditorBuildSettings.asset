@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Lvl1.unity
+    path: Assets/Scenes/Lvl1/Lvl1.unity
     guid: af9528fc995e86c4c9e0762f4f79f354
   - enabled: 1
     path: Assets/Scenes/Map.unity
     guid: cb7b9cf1b3bd4f845bf4942ccadb418c
+  - enabled: 1
+    path: Assets/Scenes/Altar.unity
+    guid: dff1c76f000f4ff4781824d1a71e08a4
   m_configObjects: {}

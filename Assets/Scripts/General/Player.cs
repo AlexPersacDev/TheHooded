@@ -14,8 +14,8 @@ public class Player : MonoBehaviour, IDamageable
 
     [Header("Properties")]
     [SerializeField] float speed, force;
-    int playerHP = 5;
-    int playerSouls = 3;
+    int playerHP;
+    int playerSouls;
     bool canMove = true;
 
     float radOverlap = 0.2f;
@@ -39,6 +39,8 @@ public class Player : MonoBehaviour, IDamageable
         rbPlayer = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spawn = transform.position + Vector3.up;
+        playerHP = GameManager.gM.PlayerLifes();
+        playerSouls = GameManager.gM.PlayerSouls();
     }
 
 
@@ -62,6 +64,10 @@ public class Player : MonoBehaviour, IDamageable
         if (trigger.TryGetComponent<ICollectable>(out ICollectable collectable))//si el objeto con el que se colisiona tiene dicha interfaz
         {
             collectable.Collected();//se llama al método
+        }
+        else if (trigger.TryGetComponent<IInteractuable>(out IInteractuable interactuable))//si el objeto con el que se colisiona tiene dicha interfaz
+        {
+            interactuable.Interaction();//se llama al método
         }
     }
     void PlayerOnGround()
@@ -133,7 +139,7 @@ public class Player : MonoBehaviour, IDamageable
     void LooseLifes()
     {
         looseLife?.Invoke();
-        playerHP--;
+        playerHP = GameManager.gM.PlayerLifes();
     }
 
     void IDamageable.Damaged()
@@ -157,8 +163,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         anim.SetTrigger("Died");
         die?.Invoke();
-        playerSouls--;
-        playerHP = 5;
+        playerHP = GameManager.gM.PlayerLifes();
+        playerSouls = GameManager.gM.PlayerSouls();
     }
 
     public void Respawn()

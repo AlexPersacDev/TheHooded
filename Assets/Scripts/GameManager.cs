@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
 
 
 
-    int playerLifes;
-    int playerSouls;
-    int soulFragments;
-
+    int playerLifes = 5;
+    int playerSouls = 3;
+    int soulFragments = 0;
+    List<int> info;
     private void Awake()
     {
 
@@ -38,16 +38,32 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SoulFragment.collected += Collectionable;
-        Player.looseLife += PlayerLifes;
+        Player.looseLife += LoosingPlayerLifes;
+        Player.die += LoosingPlayerSouls;
+
     }
 
     private void OnDisable()
     {
         SoulFragment.collected -= Collectionable;
-        Player.looseLife += PlayerLifes;
+        Player.looseLife -= LoosingPlayerLifes;
+        Player.die -= LoosingPlayerSouls;
     }
 
-    void PlayerLifes()
+    public int PlayerLifes()
+    {
+        return playerLifes;
+    }
+    public int PlayerSouls()
+    {
+        return playerSouls;
+    }
+    public int SoukFragments()
+    {
+        return soulFragments;
+    }
+
+    void LoosingPlayerLifes()
     {
         playerLifes--;
     }
@@ -57,7 +73,7 @@ public class GameManager : MonoBehaviour
         soulFragments++;
     }
 
-    void PlayerSouls()
+    void LoosingPlayerSouls()
     {
         playerLifes = 5;
         playerSouls--;
