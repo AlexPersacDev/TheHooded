@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     int playerLifes = 5;
     int playerSouls = 3;
     int soulFragments = 0;
-    List<int> info;
+    [SerializeField] List<Sprite> upgardeList;
     private void Awake()
     {
 
@@ -61,6 +61,11 @@ public class GameManager : MonoBehaviour
     public int SoukFragments()
     {
         return soulFragments;
+    }
+
+    public List<Sprite> UpgardesList()
+    {
+        return upgardeList;
     }
 
     void LoosingPlayerLifes()

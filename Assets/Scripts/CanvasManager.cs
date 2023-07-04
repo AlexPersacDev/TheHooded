@@ -26,13 +26,15 @@ public class CanvasManager : MonoBehaviour
 
     [Header("Tarot Cards")]
     [SerializeField] GameObject tarot;
-    [SerializeField] List<Sprite> tarotCards;
+    List<Sprite> tarotCards;
     [SerializeField] List<Button> buttons;
     [SerializeField] GameObject tarotPanel;
-    [SerializeField] TextMeshProUGUI titleCard;
-    [SerializeField] TextMeshProUGUI descriptionCard;
-    [SerializeField] List<string> title;
-    [SerializeField] List<string> description; 
+    [SerializeField] List<TextMeshProUGUI> titleCard;
+    [SerializeField] List<TextMeshProUGUI> descriptionCard;
+    [SerializeField] List<TextMeshProUGUI> pricersCard;
+    [SerializeField] List<string> titles;
+    [SerializeField] List<string> descriptions; 
+    [SerializeField] List<string> prices; 
     bool dashAttackActive;
     [SerializeField] Sprite dashAttack;
 
@@ -151,6 +153,7 @@ public class CanvasManager : MonoBehaviour
     void TarotCards()
     {
         int counter = 0; //indice para sacar unicamente 3 cartas
+        tarotCards = GameManager.gM.UpgardesList();
         tarot.SetActive(true); //Activo el grupo
         while (counter <= 2)// mientras el contador sea menor o igual a dos
         {
@@ -162,6 +165,15 @@ public class CanvasManager : MonoBehaviour
                     {
                         int indexCard = Random.Range(0, tarotCards.ToArray().Length); //saca un indice
                         buttons[counter].image.sprite = tarotCards[indexCard]; //y aplicale dicho sprite
+                        titleCard[counter].text = titles[indexCard];
+                        descriptionCard[counter].text = descriptions[indexCard];
+                        pricersCard[counter].text = prices[indexCard];
+                        //TextMeshProUGUI title = buttons[counter].GetComponentInChildren<TextMeshProUGUI>(); //accedo al hijo de dicho boton que es el titulo
+                        //title.text = titles[indexCard]; //y le pongo el titulo correspondiente al indice de la carta mostrada
+                        //Debug.Log(title.GetComponentInChildren<TextMeshProUGUI>() + "/" + title);
+                        ////TextMeshProUGUI description = title.GetComponentInChildren<TextMeshProUGUI>(); //después accedo al hijo de dicho titulo 
+                        ////description.text = descriptions[indexCard];//y le pongo la descripción que corresonde también a este
+                        ////description.GetComponentInChildren<TextMeshProUGUI>().text = prices[indexCard];//por ultimo sigo el mismo procedimiento para los precios
                     }
                 }
             }
