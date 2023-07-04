@@ -27,6 +27,17 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] Transform hand;
     [SerializeField] LayerMask enemy;
 
+    //Desbloqueables PowerUps
+    [Header("Desbloqueables")]
+    bool unblockedDash = false;
+    bool unblockedDashAttack = false;
+    bool unblockedClimb = false;
+    bool unblockedWallJump = false;
+    bool unblockedDistanceAttack = false;
+    bool unblockedMeleAtack2 = false;
+    bool unblockedShield = false;
+    bool unblockedDobleJump = false;
+
     public delegate void LooseLife();
     public static event LooseLife looseLife;
     public delegate void Died();

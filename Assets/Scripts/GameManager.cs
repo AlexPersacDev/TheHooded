@@ -24,6 +24,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnEnable()
+    {
+        SoulFragment.collected += Collectionable;
+        Player.looseLife += LoosingPlayerLifes;
+        Player.die += LoosingPlayerSouls;
+
+    }
+
     void Start()
     {
 
@@ -33,14 +41,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
-    }
-
-    private void OnEnable()
-    {
-        SoulFragment.collected += Collectionable;
-        Player.looseLife += LoosingPlayerLifes;
-        Player.die += LoosingPlayerSouls;
-
     }
 
     private void OnDisable()
