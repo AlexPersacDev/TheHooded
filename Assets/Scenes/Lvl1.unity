@@ -505,6 +505,15 @@ MonoBehaviour:
   BlackPanel: {fileID: 968289451}
   pauseMenu: {fileID: 1716960055}
   optionsMenu: {fileID: 1087485610}
+  tarot: {fileID: 0}
+  tarotCards: []
+  buttons: []
+  tarotPanel: {fileID: 0}
+  titleCard: {fileID: 0}
+  descriptionCard: {fileID: 0}
+  title: []
+  description: []
+  dashAttack: {fileID: 0}
 --- !u!1 &43884580
 GameObject:
   m_ObjectHideFlags: 0
