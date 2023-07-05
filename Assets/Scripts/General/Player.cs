@@ -27,16 +27,14 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] Transform hand;
     [SerializeField] LayerMask enemy;
 
-    //Desbloqueables PowerUps
-    [Header("Desbloqueables")]
-    bool unblockedDash = false;
-    bool unblockedDashAttack = false;
-    bool unblockedClimb = false;
-    bool unblockedWallJump = false;
-    bool unblockedDistanceAttack = false;
-    bool unblockedMeleAtack2 = false;
-    bool unblockedShield = false;
-    bool unblockedDobleJump = false;
+    bool dash = false;
+    bool dashAttack = false;
+    bool climb = false;
+    bool wallJump = false;
+    bool distanceAttack = false;
+    bool meleAtack2 = false;
+    bool shield = false;
+    bool dobleJump = false;
 
     public delegate void LooseLife();
     public static event LooseLife looseLife;
@@ -52,6 +50,11 @@ public class Player : MonoBehaviour, IDamageable
         spawn = transform.position + Vector3.up;
         playerHP = GameManager.gM.PlayerLifes();
         playerSouls = GameManager.gM.PlayerSouls();
+
+        dash = GameManager.gM.Dash();
+        meleAtack2 = GameManager.gM.Range();
+        distanceAttack = GameManager.gM.DistanceAttack();
+        shield = GameManager.gM.Shield();
     }
 
 
@@ -79,6 +82,7 @@ public class Player : MonoBehaviour, IDamageable
         else if (trigger.TryGetComponent<IInteractuable>(out IInteractuable interactuable))//si el objeto con el que se colisiona tiene dicha interfaz
         {
             interactuable.Interaction();//se llama al método
+            Destroy(trigger);
         }
     }
     void PlayerOnGround()

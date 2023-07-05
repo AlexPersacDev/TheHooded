@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CanvasManager : MonoBehaviour
 {
     [Header("Player UI")]
+    [SerializeField] GameObject playerUIGroup;
     [SerializeField] TextMeshProUGUI soulFrag;
     int soulFragCount;
     [SerializeField] GameObject[] playerLifes;
@@ -34,7 +35,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> pricersCard;
     [SerializeField] List<string> titles;
     [SerializeField] List<string> descriptions; 
-    [SerializeField] List<string> prices; 
+    [SerializeField] List<int> prices; 
     bool dashAttackActive;
     [SerializeField] Sprite dashAttack;
 
@@ -48,13 +49,14 @@ public class CanvasManager : MonoBehaviour
         Buttons.options += OptionsMenu;
         Buttons.back += Back;
         Altar.tarodCards += TarotCards;
+        GameManager.upgradeActivated += UpgradeActivated;
     }
 
     void Start()
     {
         playerLifesCount = GameManager.gM.PlayerLifes();
         playerSoulsCount = GameManager.gM.PlayerSouls();
-        soulFragCount = GameManager.gM.SoukFragments();
+        soulFragCount = GameManager.gM.SoulFragments();
         EnableLifes();
         playerSouls.text = "x" + playerSoulsCount.ToString();
         soulFrag.text = "x" + soulFragCount.ToString();
@@ -74,13 +76,14 @@ public class CanvasManager : MonoBehaviour
     private void OnDisable()
     {
         SoulFragment.collected -= SoulFragmentsUpdate;
-        Player.looseLife += LifesUpdate;
+        Player.looseLife -= LifesUpdate;
         Player.die -= SoulsUpdate;
         Player.gameOver -= GameOver;
         Buttons.resume -= PauseMenu;
         Buttons.options -= OptionsMenu;
         Buttons.back -= Back;
         Altar.tarodCards -= TarotCards;
+        GameManager.upgradeActivated -= UpgradeActivated;
     }
 
     void EnableLifes()
@@ -153,6 +156,8 @@ public class CanvasManager : MonoBehaviour
     void TarotCards()
     {
         int counter = 0; //indice para sacar unicamente 3 cartas
+        Time.timeScale = 0;
+        playerUIGroup.SetActive(false);
         tarotCards = GameManager.gM.UpgardesList();
         tarot.SetActive(true); //Activo el grupo
         while (counter <= 2)// mientras el contador sea menor o igual a dos
@@ -167,19 +172,21 @@ public class CanvasManager : MonoBehaviour
                         buttons[counter].image.sprite = tarotCards[indexCard]; //y aplicale dicho sprite
                         titleCard[counter].text = titles[indexCard];
                         descriptionCard[counter].text = descriptions[indexCard];
-                        pricersCard[counter].text = prices[indexCard];
-                        //TextMeshProUGUI title = buttons[counter].GetComponentInChildren<TextMeshProUGUI>(); //accedo al hijo de dicho boton que es el titulo
-                        //title.text = titles[indexCard]; //y le pongo el titulo correspondiente al indice de la carta mostrada
-                        //Debug.Log(title.GetComponentInChildren<TextMeshProUGUI>() + "/" + title);
-                        ////TextMeshProUGUI description = title.GetComponentInChildren<TextMeshProUGUI>(); //después accedo al hijo de dicho titulo 
-                        ////description.text = descriptions[indexCard];//y le pongo la descripción que corresonde también a este
-                        ////description.GetComponentInChildren<TextMeshProUGUI>().text = prices[indexCard];//por ultimo sigo el mismo procedimiento para los precios
+                        pricersCard[counter].text = prices[indexCard].ToString();
                     }
                 }
             }
             counter++;
         }
              
+    }
+
+    void UpgradeActivated()
+    {
+        soulFragCount = GameManager.gM.SoulFragments();
+        Time.timeScale = 1;
+        tarot.SetActive(false);
+        playerUIGroup.SetActive(true);
     }
 
 }

@@ -10,8 +10,23 @@ public class GameManager : MonoBehaviour
 
     int playerLifes = 5;
     int playerSouls = 3;
-    int soulFragments = 0;
-    [SerializeField] List<Sprite> upgardeList;
+    int soulFragments = 15;
+    [Header("lista de mejoras")]
+    [SerializeField] List<Sprite> upgradeList;
+    List<bool> upgrades;
+    //Desbloqueables PowerUps
+    
+    bool dash = false;
+    bool dashAttack = false;
+    bool climb = false;
+    bool wallJump = false;
+    bool distanceAttack = false;
+    bool meleAtack2 = false;
+    bool shield = false;
+    bool DobleJump = false;
+
+    public delegate void UpgradeActivated();
+    public static event UpgradeActivated upgradeActivated;
     private void Awake()
     {
 
@@ -34,7 +49,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < upgradeList.ToArray().Length; i++)
+        {
 
+        }
     }
 
     // Update is called once per frame
@@ -58,15 +76,16 @@ public class GameManager : MonoBehaviour
     {
         return playerSouls;
     }
-    public int SoukFragments()
+    public int SoulFragments()
     {
         return soulFragments;
     }
 
     public List<Sprite> UpgardesList()
     {
-        return upgardeList;
+        return upgradeList;
     }
+
 
     void LoosingPlayerLifes()
     {
@@ -82,5 +101,55 @@ public class GameManager : MonoBehaviour
     {
         playerLifes = 5;
         playerSouls--;
+    }
+    //desbloquear mejoras
+    public void UnlockDistanceAttack(int price)
+    {
+        if (soulFragments >= price)
+        {
+            distanceAttack = true;
+            upgradeActivated?.Invoke();
+        } 
+    }
+    public void UnlockRange(int price)
+    {
+        if (soulFragments >= price)
+        {
+            meleAtack2 = true;
+            upgradeActivated?.Invoke();
+        }
+    }
+    public void UnlockDash(int price)
+    {
+        if (soulFragments >= price)
+        {
+            dash = true;
+            upgradeActivated?.Invoke();
+        }
+    }
+    public void UnlockShield(int price)
+    {
+        if (soulFragments >= price)
+        {
+            shield = true;
+            upgradeActivated?.Invoke();
+        }
+    }
+    //pasar datos de mejoras
+    public bool DistanceAttack()
+    {
+       return distanceAttack;
+    }
+    public bool Range()
+    {
+        return meleAtack2;
+    }
+    public bool Dash()
+    {
+        return dash;
+    }
+    public bool Shield()
+    {
+        return shield;
     }
 }
