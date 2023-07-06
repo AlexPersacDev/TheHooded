@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     int playerLifes = 5;
     int playerSouls = 3;
-    int soulFragments = 15;
+    int soulFragments = 0;
     [Header("lista de mejoras")]
     [SerializeField] List<Sprite> upgradeList;
     List<bool> upgrades;
@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
     {
         if (soulFragments >= price)
         {
+            soulFragments -= price;
             distanceAttack = true;
             upgradeActivated?.Invoke();
         } 
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
     {
         if (soulFragments >= price)
         {
+            soulFragments -= price;
             meleAtack2 = true;
             upgradeActivated?.Invoke();
         }
@@ -123,6 +125,7 @@ public class GameManager : MonoBehaviour
     {
         if (soulFragments >= price)
         {
+            soulFragments -= price;
             dash = true;
             upgradeActivated?.Invoke();
         }
@@ -131,6 +134,7 @@ public class GameManager : MonoBehaviour
     {
         if (soulFragments >= price)
         {
+            soulFragments -= price;
             shield = true;
             upgradeActivated?.Invoke();
         }

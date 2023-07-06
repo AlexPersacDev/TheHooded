@@ -184,6 +184,7 @@ public class CanvasManager : MonoBehaviour
     void UpgradeActivated()
     {
         soulFragCount = GameManager.gM.SoulFragments();
+        soulFrag.text = "x" + soulFragCount.ToString();
         Time.timeScale = 1;
         tarot.SetActive(false);
         playerUIGroup.SetActive(true);
