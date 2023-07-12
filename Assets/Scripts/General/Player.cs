@@ -9,11 +9,12 @@ public class Player : MonoBehaviour, IDamageable
     Animator anim;
     float h, v;
     Vector3 spawn;
+    CapsuleCollider2D collPlayer;
 
 
 
     [Header("Properties")]
-    [SerializeField] float speed, force;
+    [SerializeField] float speed, force, dashSpeed;
     int playerHP;
     int playerSouls;
     bool canMove = true;
@@ -36,6 +37,9 @@ public class Player : MonoBehaviour, IDamageable
     bool shield = false;
     bool dobleJump = false;
 
+
+    bool dashing = false;
+
     public delegate void LooseLife();
     public static event LooseLife looseLife;
     public delegate void Died();
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         rbPlayer = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        collPlayer = GetComponent<CapsuleCollider2D>();
         spawn = transform.position + Vector3.up;
         playerHP = GameManager.gM.PlayerLifes();
         playerSouls = GameManager.gM.PlayerSouls();
@@ -64,6 +69,7 @@ public class Player : MonoBehaviour, IDamageable
         v = Input.GetAxisRaw("Vertical");
         PlayerOnGround();//Detecto si estoy en el suelo
         PlayerAttack();
+        StartCoroutine(Dash());
     }
 
     private void FixedUpdate()
@@ -137,7 +143,7 @@ public class Player : MonoBehaviour, IDamageable
 
     void PlayerFalling()//método de caida
     {
-        if (rbPlayer.velocity.y <= 0)//si mi velocidad en y es menor a 0
+        if (rbPlayer.velocity.y <= 0 && !dashing)//si mi velocidad en y es menor a 0
         {
             anim.SetBool("Falling", true); //estaré cayendo
         }
@@ -174,6 +180,45 @@ public class Player : MonoBehaviour, IDamageable
 
     }
 
+    //void Dash()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.D))
+    //    {
+    //        anim.SetTrigger("Dash");
+    //        rbPlayer.velocity = Vector2.zero;
+    //        rbPlayer.AddForce(new Vector3(transform.localScale.x, 0, 0) * dashSpeed, ForceMode2D.Impulse);
+    //        rbPlayer.isKinematic = true;
+    //        rbPlayer.isKinematic = false;
+
+    //    }
+    //}
+
+    IEnumerator Dash()
+    {
+        if (dash && Input.GetKeyDown(KeyCode.D))
+        {
+            anim.SetBool("Falling", false);
+            dashing = true;
+            anim.SetTrigger("Dash");
+            rbPlayer.AddForce(new Vector3(transform.localScale.x, 0, 0) * dashSpeed, ForceMode2D.Impulse);
+            collPlayer.direction = CapsuleDirection2D.Horizontal;
+            collPlayer.size = new Vector2(4.1f, 0.85f);
+            while (dashing)
+            {
+                rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
+                yield return null;
+            }
+            dashing = false;
+            StopCoroutine(Dash());
+        }
+    }
+    void StopDashing()
+    {
+        collPlayer.direction = CapsuleDirection2D.Vertical;
+        collPlayer.size = new Vector2(1, 1.3f);
+        dashing = false;
+    }
+
     void Dying()
     {
         anim.SetTrigger("Died");
@@ -187,6 +232,7 @@ public class Player : MonoBehaviour, IDamageable
         transform.position = spawn; //vuelvo al punto inicial
         rbPlayer.velocity = Vector3.zero;
         rbPlayer.isKinematic = false;
+        dashing = false;
         if (playerSouls == 0)
         {
             gameOver?.Invoke();

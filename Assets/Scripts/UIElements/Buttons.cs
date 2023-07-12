@@ -41,4 +41,22 @@ public class Buttons : MonoBehaviour
     {
         back?.Invoke();
     }
+
+    public void ButtonLvl1()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void ButtonLvl2()
+    {
+        SceneManager.LoadScene(4);
+    }
+    public void Altar1()
+    {
+        SceneManager.LoadScene(3);
+    }
+    public void Altar2()
+    {
+        SceneManager.LoadScene(5);
+    }
+
 }

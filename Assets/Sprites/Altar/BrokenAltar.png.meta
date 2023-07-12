@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: 224926159062791791
     second: BrokenAltar_4
+  - first:
+      213: 4883415370540017496
+    second: BrokenAltar_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -114,7 +117,7 @@ TextureImporter:
         width: 81
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -122,27 +125,6 @@ TextureImporter:
       bones: []
       spriteID: 1b0c23e088a567ae0800000000000000
       internalID: -1551953481182297935
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BrokenAltar_1
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 425
-        width: 81
-        height: 75
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a556dc97f4d1ff780800000000000000
-      internalID: -8647160532344937126
       vertices: []
       indices: 
       edges: []
@@ -156,7 +138,7 @@ TextureImporter:
         width: 81
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -177,7 +159,7 @@ TextureImporter:
         width: 81
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,7 +180,7 @@ TextureImporter:
         width: 81
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -206,6 +188,27 @@ TextureImporter:
       bones: []
       spriteID: f6671a366291f1300800000000000000
       internalID: 224926159062791791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BrokenAltar_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 425
+        width: 81
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85768b3f76065c340800000000000000
+      internalID: 4883415370540017496
       vertices: []
       indices: 
       edges: []
