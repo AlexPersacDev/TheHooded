@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     int playerLifes = 5;
     int playerSouls = 3;
-    int soulFragments = 0;
+    int soulFragments = 100;
     [Header("lista de mejoras")]
     [SerializeField] List<Sprite> upgradeList;
     List<bool> upgrades;
@@ -24,6 +25,10 @@ public class GameManager : MonoBehaviour
     bool meleAtack2 = false;
     bool shield = false;
     bool DobleJump = false;
+
+    string actualButtonTag;
+    bool upgraded = false;
+    List<string> disabledButtons;
 
     public delegate void UpgradeActivated();
     public static event UpgradeActivated upgradeActivated;
@@ -110,7 +115,9 @@ public class GameManager : MonoBehaviour
             soulFragments -= price;
             distanceAttack = true;
             upgradeActivated?.Invoke();
-        } 
+            upgraded = true;
+
+        }
     }
     public void UnlockRange(int price)
     {
@@ -119,6 +126,8 @@ public class GameManager : MonoBehaviour
             soulFragments -= price;
             meleAtack2 = true;
             upgradeActivated?.Invoke();
+            upgraded = true;
+
         }
     }
     public void UnlockDash(int price)
@@ -128,6 +137,7 @@ public class GameManager : MonoBehaviour
             soulFragments -= price;
             dash = true;
             upgradeActivated?.Invoke();
+            upgraded = true;
         }
     }
     public void UnlockShield(int price)
@@ -137,6 +147,8 @@ public class GameManager : MonoBehaviour
             soulFragments -= price;
             shield = true;
             upgradeActivated?.Invoke();
+            upgraded = true;
+
         }
     }
     //pasar datos de mejoras
@@ -155,5 +167,30 @@ public class GameManager : MonoBehaviour
     public bool Shield()
     {
         return shield;
+    }
+
+    public void AltarButton(Button altarButton)
+    {
+        actualButtonTag = altarButton.tag;
+    }
+
+    public void DisableAltarButton()
+    {
+        //if (disabledButtons.Count != 0)
+        //{
+        //    for (int i = 0; i < disabledButtons.Count; i++)
+        //    {
+        //        GameObject button = GameObject.FindWithTag(disabledButtons[i]);
+        //        button.SetActive(false);
+        //    }
+        //}
+        if (upgraded)
+        {
+            //int index = actualButtonTag.Count;
+            GameObject button = GameObject.FindWithTag(actualButtonTag);
+            button.SetActive(false);
+            upgraded = false;
+            //disabledButtons.Add(button.tag);
+        }
     }
 }

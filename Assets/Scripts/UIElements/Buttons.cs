@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Buttons : MonoBehaviour
 {
@@ -11,6 +12,17 @@ public class Buttons : MonoBehaviour
     public static event Options options;
     public delegate void Back();
     public static event Back back;
+    Button thisButton;
+    int la = 10;
+
+
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            GameManager.gM.DisableAltarButton();
+        }
+    }
     public void RestartGame()
     {
         string lvlName = SceneManager.GetActiveScene().name;//recoge el nombre de la escena actual
@@ -50,13 +62,11 @@ public class Buttons : MonoBehaviour
     {
         SceneManager.LoadScene(4);
     }
-    public void Altar1()
+    public void Altar()
     {
+        thisButton = gameObject.GetComponent<Button>();
+        GameManager.gM.AltarButton(thisButton); //le paso el boton pulsado al gm
         SceneManager.LoadScene(3);
-    }
-    public void Altar2()
-    {
-        SceneManager.LoadScene(5);
     }
 
 }

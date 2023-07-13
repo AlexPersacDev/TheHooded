@@ -165,19 +165,21 @@ public class Player : MonoBehaviour, IDamageable
 
     void IDamageable.Damaged()
     {
-        rbPlayer.velocity = Vector2.zero;
-        LooseLifes();
-        if (playerHP > 0)
+        if(!dashing)
         {
-            rbPlayer.AddForce(new Vector3(-transform.localScale.x, 0, 0) * 15, ForceMode2D.Impulse);
-            anim.SetTrigger("Damaged");
+            rbPlayer.velocity = Vector2.zero;
+            LooseLifes();
+            if (playerHP > 0)
+            {
+                rbPlayer.AddForce(new Vector3(-transform.localScale.x, 0, 0) * 15, ForceMode2D.Impulse);
+                anim.SetTrigger("Damaged");
+            }
+            else
+            {
+                Dying();
+                rbPlayer.AddForce(new Vector3(-transform.localScale.x, 1, 0).normalized * 50, ForceMode2D.Impulse);
+            }
         }
-        else
-        {
-            Dying();
-            rbPlayer.AddForce(new Vector3(-transform.localScale.x, 1, 0).normalized * 50, ForceMode2D.Impulse);
-        }
-
     }
 
     //void Dash()

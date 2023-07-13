@@ -18,7 +18,7 @@ public class TarotButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void Start()
     {
-        int.TryParse(priceCard.text, out price);
+        int.TryParse(priceCard.text, out price); //pasa el precio que está en string a int
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -47,17 +47,22 @@ public class TarotButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         else if (thisButton.image.sprite.name == "MeleAttack2")
         {
             GameManager.gM.UnlockRange(price);
-
         }
         else if (thisButton.image.sprite.name == "Dash")
         {
             GameManager.gM.UnlockDash(price);
-
         }
         else if (thisButton.image.sprite.name == "Shield")
         {
             GameManager.gM.UnlockShield(price);
-
+        }
+        else if (thisButton.image.sprite.name == "DashAttack")
+        {
+            GameManager.gM.UnlockShield(price);
+        }
+        else if (thisButton.image.sprite.name == "WallJump")
+        {
+            GameManager.gM.UnlockShield(price);
         }
     }
 

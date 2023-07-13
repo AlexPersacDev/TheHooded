@@ -141,7 +141,14 @@ public class CanvasManager : MonoBehaviour
 
     void Back()
     {
-        optionsMenu.SetActive(false); 
+        if (optionsMenu.gameObject.activeSelf)
+        {
+            optionsMenu.SetActive(false);
+        }
+        else if (tarot.gameObject.activeSelf)
+        {
+            tarot.SetActive(false);
+        }
     }
     void GameOver()
     {
