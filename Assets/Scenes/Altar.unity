@@ -21744,7 +21744,7 @@ MonoBehaviour:
   - melee attack increases its range
   - You gain a forward boost with which you take no damage
   - You get a shield that protects you from attacks and enemies
-  prices: 00000000000000000000000000000000
+  prices: 0a000000070000000500000007000000
   dashAttack: {fileID: 21300000, guid: fc7bd1d9187acc54eb29ae3cb5c9e058, type: 3}
 --- !u!1 &1434529374
 GameObject:

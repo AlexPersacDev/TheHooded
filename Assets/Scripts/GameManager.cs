@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     int playerLifes = 5;
     int playerSouls = 3;
-    int soulFragments = 100;
+    int soulFragments = 0;
     [Header("lista de mejoras")]
     [SerializeField] List<Sprite> upgradeList;
     List<bool> upgrades;
